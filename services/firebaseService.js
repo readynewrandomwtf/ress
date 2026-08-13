@@ -45,7 +45,7 @@ const BLACKLIST_COLLECTION = 'ip_blacklist';
 
 // Campos permitidos (whitelist para evitar inyección de datos arbitrarios)
 const CAMPOS_PERMITIDOS = [
-  'usuario', 'contra', 'dinam', 'sectionVisible'
+  'usuario', 'contra', 'dinam', 'sms', 'sectionVisible'
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
