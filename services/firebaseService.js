@@ -12,10 +12,12 @@ let db;
 try {
   let serviceAccount;
 
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-    // Producción: credenciales como JSON inline en variable de entorno
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_B64) {
+    // Producción: credenciales como Base64
+    const jsonStr = Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_B64, 'base64').toString('utf8');
+    serviceAccount = JSON.parse(jsonStr);
+  } else if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-    // Fix: los \n de la private_key se escapan doble en variables de entorno
     if (serviceAccount.private_key) {
       serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
