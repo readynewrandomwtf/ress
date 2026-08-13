@@ -13,8 +13,12 @@ try {
   let serviceAccount;
 
   if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-    // Azure / producción: credenciales como JSON inline en variable de entorno
+    // Producción: credenciales como JSON inline en variable de entorno
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+    // Fix: los \n de la private_key se escapan doble en variables de entorno
+    if (serviceAccount.private_key) {
+      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
   } else {
     // Local: cargar desde archivo
     const serviceAccountPath = path.resolve(__dirname, '..', process.env.FIREBASE_SERVICE_ACCOUNT || './serviceAccountKey.json');
